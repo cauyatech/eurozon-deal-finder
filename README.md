@@ -1,6 +1,6 @@
 # Eurozon Deal Finder
 
-Eurozon Deal Finder est une application web qui permet de comparer automatiquement les prix d'un même produit Amazon entre plusieurs pays européens à partir d'une simple URL. Le projet est divisé en deux parties : un frontend React et un backend Node.js avec Express et Puppeteer.
+Eurozon Deal Finder est une application web qui permet de comparer automatiquement les prix d'un même produit Amazon entre plusieurs pays européens à partir d'une simple URL.
 
 ---
 
@@ -67,7 +67,6 @@ Cliquez sur "Comparer" → les prix s'affichent en tableau avec lien direct par 
 
 ## ✅ À venir
 
-* Intégration Amazon.it, Amazon.es, Amazon.be
 * Système d'alerte de baisse de prix
 * Extension Chrome
 
