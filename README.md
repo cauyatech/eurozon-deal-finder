@@ -92,7 +92,7 @@ eurozon-deal-finder/
 
 ## 🧑‍💻 Auteurs
 
-Projet réalisé dans le cadre d’un module Hub à Epitech.
+Projet réalisé dans le cadre d’un module Hub à Epitech par SILVA DA COSTA Josselino
 
 ---
 
