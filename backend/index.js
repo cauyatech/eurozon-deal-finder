@@ -15,6 +15,7 @@ const scrapeAmazonFR = require('./scrapers/amazonFR');
 const scrapeAmazonDE = require('./scrapers/amazonDE');
 const scrapeAmazonES = require('./scrapers/amazonES');
 const scrapeAmazonIT = require('./scrapers/amazonIT');
+const scrapeAmazonBE = require('./scrapers/amazonBE');
 const path = require('path');
 
 app.use(cors());
@@ -26,27 +27,31 @@ app.get('/compare/:asin', async (req, res) => {
         const deData = await scrapeAmazonDE(asin);
         const esData = await scrapeAmazonES(asin);
         const itData = await scrapeAmazonIT(asin);
+        const beData = await scrapeAmazonBE(asin);
 
         res.json({
             asin,
-            countries: ['fr', 'de', 'es', 'it'],
+            countries: ['fr', 'de', 'es', 'it', 'be'],
             prices: {
                 fr: frData.price || 'Prix indisponible.',
                 de: deData.price || 'Prix indisponible.',
                 es: esData.price || 'Prix indisponible.',
-                it: itData.price || 'Prix indisponible.'
+                it: itData.price || 'Prix indisponible.',
+                be: beData.price || 'Prix indisponible.'
             },
             titles: {
                 fr: frData.title || 'Produit non trouvé dans ce pays.',
                 de: deData.title || 'Produit non trouvé dans ce pays.',
                 es: esData.title || 'Produit non trouvé dans ce pays.',
-                it: itData.title || 'Produit non trouvé dans ce pays.'
+                it: itData.title || 'Produit non trouvé dans ce pays.',
+                be: beData.title || 'Produit non trouvé dans ce pays.'
             },
             links: {
                 fr: frData.price ? `https://www.amazon.fr/dp/${asin}` : null,
                 de: deData.price ? `https://www.amazon.de/dp/${asin}` : null,
                 es: esData.price ? `https://www.amazon.es/dp/${asin}` : null,
-                it: itData.price ? `https://www.amazon.it/dp/${asin}` : null
+                it: itData.price ? `https://www.amazon.it/dp/${asin}` : null,
+                be: beData.price ? `https://www.amazon.com.be/dp/${asin}` : null
             }
         });
     } catch (err) {
