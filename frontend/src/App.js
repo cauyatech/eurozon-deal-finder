@@ -25,6 +25,13 @@ function App() {
     setData(result);
   };
 
+  const ascPrice = (priceStr) => {
+    if (!priceStr || typeof priceStr !== 'string') return Infinity;
+    const match = priceStr.match(/([0-9]+[,.]?[0-9]*)/);
+    if (!match) return Infinity;
+    return parseFloat(match[1].replace(',', '.'));
+  };
+
   return (
     <div style={{ padding: 20 }}>
       <h1>Eurozon Deal Finder</h1>
@@ -40,21 +47,40 @@ function App() {
       {data && (
         <div style={{ marginTop: 20 }}>
           <h2>Résultats pour ASIN: {data.asin}</h2>
-          {data.countries.map((country) => (
-            <div key={country} style={{ marginBottom: '1rem' }}>
-              <h3>{country.toUpperCase()} - {data.titles[country]}</h3>
-              <p>Prix : {data.prices[country]}</p>
-              {data.links[country]&& (
-              <a
-                href={data.links[country]}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Voir le produit sur Amazon.{country}
-              </a>
-              )}
-            </div>
-          ))}
+          <table border="1" cellPadding="8" style={{ borderCollapse: 'collapse', width: '100%', marginTop: '1rem' }}>
+            <thead>
+              <tr>
+                <th>Pays</th>
+                <th>Nom du produit</th>
+                <th>Prix</th>
+                <th>Lien</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...data.countries].sort((a, b) => {
+                return ascPrice(data.prices[a]) - ascPrice(data.prices[b]);
+              }).map((country) => (
+                <tr key={country}>
+                  <td>{country.toUpperCase()}</td>
+                  <td>{data.titles[country]}</td>
+                  <td>{data.prices[country]}</td>
+                  <td>
+                    {data.links[country] ? (
+                      <a
+                        href={data.links[country]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Voir le produit
+                      </a>
+                    ) : (
+                      'Non disponible'
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
