@@ -58,7 +58,7 @@ Le frontend sera disponible sur `http://localhost:3000`
 Collez une URL Amazon du style :
 
 ```
-https://www.amazon.fr/dp/B0CW9HZKYW
+https://www.amazon.fr/Samsung-Ecran-Odyssey-180Hz-R%C3%A9solution/dp/B0CW9HZKYW?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2MWNZXU6KW5Q1&dib=eyJ2IjoiMSJ9.O4mCjtJAHRGszBsGOqCOoEnbwtHlTbQSdbTZBOk5WgLulym5uVE3RH_Kb9PiCYhl_eTrAHiOAb1ky5Rlry3sjizp7Z3uifkqp3-zffQanuX6AB6RLsTy9HUXhe56yIkt7ZaG1ZmvliywwDakG33wTIOTpehTXCrm-lchIyK8zTy_lYepA1I3M_aAQj3XYh8OiUV4M7rl0UuPUPMpDXBww3y4kV_MKWpf-xlpBzxDwJxHc6NmDhB0Tn9Sicz41SkYvJdMmuB7ZcS33FtitEATLHeR6laE-GrYlIoZfLQEKeo.aUU3YaKMKYzn4QSZnMxIQuX8p1zob5h6BNImuvH0BvU&dib_tag=se&keywords=samsung+g5&qid=1747576066&sprefix=samsung+g5%2Caps%2C340&sr=8-2
 ```
 
 Cliquez sur "Comparer" → les prix s'affichent en tableau avec lien direct par pays.
