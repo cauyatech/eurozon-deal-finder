@@ -7,7 +7,7 @@ Eurozon Deal Finder est une application web qui permet de comparer automatiqueme
 ## 🚀 Fonctionnalités
 
 * Extraction automatique de l'ASIN depuis une URL Amazon
-* Scraping des prix sur Amazon.fr, Amazon.de (extensible à d'autres pays)
+* Scraping des prix sur Amazon.fr, Amazon.de, Amazon.it, Amazon.es, Amazon.be.
 * Affichage comparatif des prix dans un tableau trié
 * Lien direct vers la page du produit
 * Affichage du nom du produit par pays
@@ -36,6 +36,7 @@ cd eurozon-deal-finder
 ```bash
 cd backend
 npm install
+npm install --save-dev nodemon
 npm run dev
 ```
 
@@ -92,7 +93,7 @@ eurozon-deal-finder/
 
 ## 🧑‍💻 Auteurs
 
-Projet réalisé dans le cadre d’un module Hub à Epitech par SILVA DA COSTA Josselino
+Projet réalisé dans le cadre du module Hub à Epitech par SILVA DA COSTA Josselino
 
 ---
 
