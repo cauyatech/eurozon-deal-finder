@@ -33,54 +33,63 @@ function App() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Eurozon Deal Finder</h1>
-      <input
-        type="text"
-        placeholder="Mettez une URL Amazon"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        style={{ width: '300px', marginRight: '10px' }}
-      />
-      <button onClick={handleCompare}>Comparer</button>
+    <div style={{ padding: 20, fontFamily: 'Segoe UI, sans-serif', backgroundColor: '#f9f9f9' }}>
+      <h1 style={{ color: '#1a1a1a', textAlign: 'center' }}>💶 Eurozon Deal Finder</h1>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
+        <input
+          type="text"
+          placeholder="Mettez une URL Amazon"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          style={{ maxWidth: '100%', width: '300px', padding: '10px', borderRadius: '6px', border: '1px solid #ccc' }}
+        />
+        <button
+          onClick={handleCompare}
+          style={{ padding: '10px 20px', backgroundColor: '#0070f3', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+        >
+          Comparer
+        </button>
+      </div>
 
       {data && (
-        <div style={{ marginTop: 20 }}>
-          <h2>Résultats pour ASIN: {data.asin}</h2>
-          <table border="1" cellPadding="8" style={{ borderCollapse: 'collapse', width: '100%', marginTop: '1rem' }}>
-            <thead>
+        <div style={{ marginTop: 30, overflowX: 'auto' }}>
+          <h2 style={{ color: '#333', textAlign: 'center' }}>📦 Résultats pour ASIN: <span style={{ color: '#0070f3' }}>{data.asin}</span></h2>
+          <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse', marginTop: '1rem', backgroundColor: '#fff', boxShadow: '0 0 10px rgba(0,0,0,0.05)' }}>
+            <thead style={{ backgroundColor: '#f0f0f0' }}>
               <tr>
-                <th>Pays</th>
-                <th>Nom du produit</th>
-                <th>Prix</th>
-                <th>Lien</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Pays</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Nom du produit</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Prix</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Lien</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Alerte</th>
               </tr>
             </thead>
             <tbody>
-              {[...data.countries].sort((a, b) => {
-                return ascPrice(data.prices[a]) - ascPrice(data.prices[b]);
-              }).map((country, index, sorted) => {
+              {[...data.countries].sort((a, b) => ascPrice(data.prices[a]) - ascPrice(data.prices[b])).map((country, index, sorted) => {
                 const cheapest = sorted[0];
                 return (
-                  <tr
-                    key={country}
-                    style={{ backgroundColor: country === cheapest ? '#d1ffd1' : 'inherit' }}
-                  >
-                    <td>{country.toUpperCase()}</td>
-                    <td>{data.titles[country]}</td>
-                    <td>{data.prices[country]}</td>
-                    <td>
+                  <tr key={country} style={{ backgroundColor: country === cheapest ? '#d1ffd1' : 'inherit' }}>
+                    <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>{country.toUpperCase()}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{data.titles[country]}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>{data.prices[country]}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>
                       {data.links[country] ? (
                         <a
                           href={data.links[country]}
                           target="_blank"
                           rel="noopener noreferrer"
+                          style={{ color: '#0070f3', textDecoration: 'none' }}
                         >
                           Voir le produit
                         </a>
                       ) : (
-                        'Non disponible'
+                        'Non dispo'
                       )}
+                    </td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>
+                      {data.alerts && data.alerts[country] ? (
+                        <span style={{ color: 'red', fontWeight: 'bold' }}>⬇ Prix en baisse</span>
+                      ) : ''}
                     </td>
                   </tr>
                 );
