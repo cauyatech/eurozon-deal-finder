@@ -54,6 +54,17 @@ Le frontend sera disponible sur `http://localhost:3000`
 
 ---
 
+### 4. Pour utiliser le projet, suivez simplement ces commandes
+
+```bash
+cd backend
+npm run dev
+```
+
+Le projet se lancera sur l'adresse `http://localhost:3001`
+
+---
+
 ## 📝 Exemple d'utilisation
 
 Collez une URL Amazon du style :
