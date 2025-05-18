@@ -59,26 +59,32 @@ function App() {
             <tbody>
               {[...data.countries].sort((a, b) => {
                 return ascPrice(data.prices[a]) - ascPrice(data.prices[b]);
-              }).map((country) => (
-                <tr key={country}>
-                  <td>{country.toUpperCase()}</td>
-                  <td>{data.titles[country]}</td>
-                  <td>{data.prices[country]}</td>
-                  <td>
-                    {data.links[country] ? (
-                      <a
-                        href={data.links[country]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Voir le produit
-                      </a>
-                    ) : (
-                      'Non disponible'
-                    )}
-                  </td>
-                </tr>
-              ))}
+              }).map((country, index, sorted) => {
+                const cheapest = sorted[0];
+                return (
+                  <tr
+                    key={country}
+                    style={{ backgroundColor: country === cheapest ? '#d1ffd1' : 'inherit' }}
+                  >
+                    <td>{country.toUpperCase()}</td>
+                    <td>{data.titles[country]}</td>
+                    <td>{data.prices[country]}</td>
+                    <td>
+                      {data.links[country] ? (
+                        <a
+                          href={data.links[country]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Voir le produit
+                        </a>
+                      ) : (
+                        'Non disponible'
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
