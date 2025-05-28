@@ -20,7 +20,7 @@ function App() {
     const asin = extractASIN(url);
     if (!asin) return alert("ASIN invalide");
 
-    const response = await fetch(`http://localhost:3001/compare/${asin}`);
+    const response = await fetch(`https://eurozon-deal-finder.onrender.com/compare/${asin}`);
     const result = await response.json();
     setData(result);
   };
@@ -85,11 +85,6 @@ function App() {
                       ) : (
                         'Non dispo'
                       )}
-                    </td>
-                    <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>
-                      {data.alerts && data.alerts[country] ? (
-                        <span style={{ color: 'red', fontWeight: 'bold' }}>⬇ Prix en baisse</span>
-                      ) : ''}
                     </td>
                   </tr>
                 );

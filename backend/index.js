@@ -10,7 +10,7 @@ console.log("Fichier lancé !");
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const scrapeAmazonFR = require('./scrapers/amazonFR');
 const scrapeAmazonDE = require('./scrapers/amazonDE');
 const scrapeAmazonES = require('./scrapers/amazonES');
@@ -56,7 +56,7 @@ app.get('/compare/:asin', async (req, res) => {
         });
     } catch (err) {
         console.error("Erreur de scraping:", err);
-        res.status(500).json({error: "Erreur de scraping Amazon.fr"});
+        res.status(500).json({error: `Erreur de scraping sur amazon.${countries}`});
     }
 });
 
