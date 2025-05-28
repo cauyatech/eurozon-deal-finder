@@ -15,21 +15,9 @@ document.getElementById('compare').addEventListener('click', async () => {
 
   const asin = asinMatch[1];
   const apiUrl = `https://eurozon-deal-finder.onrender.com/compare/${asin}`;
+  const res = await fetch(apiUrl);
+  const data = await res.json();
 
-  try {
-    const res = await fetch(apiUrl);
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    const data = await res.json();
-
-    if (!data.countries || !data.prices) {
-      throw new Error('Format de réponse API invalide');
-    }
-
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = "<strong>Prix détectés :</strong><br>" + data.countries.map(c => `${c.toUpperCase()}: ${data.prices[c]}`).join("<br>");
-  } catch (error) {
-    document.getElementById('result').innerText = `Erreur: ${error.message}`;
-  }
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = "<strong>Prix détectés :</strong><br>" + data.countries.map(c => `${c.toUpperCase()}: ${data.prices[c]}`).join("<br>");
 });
