@@ -39,7 +39,6 @@ async function scrapeAmazonFR(asin) {
     }
     return { title, price };
   });
-
   await browser.close();
   return result;
 }

@@ -56,7 +56,7 @@ app.get('/compare/:asin', async (req, res) => {
         });
     } catch (err) {
         console.error("Erreur de scraping:", err);
-        res.status(500).json({error: `Erreur de scraping sur amazon.${countries}`});
+        res.status(500).json({error: "Erreur de scraping sur amazon"});
     }
 });
 
