@@ -12,6 +12,7 @@ async function scrapeAmazonIT(asin) {
 
   const browser = await puppeteer.launch({
     headless: true,
+    executablePath: process.env.GOOGLE_CHROME_BIN || '/usr/bin/google-chrome',
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
 
