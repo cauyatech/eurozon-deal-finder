@@ -14,7 +14,7 @@ document.getElementById('compare').addEventListener('click', async () => {
   }
 
   const asin = asinMatch[1];
-  const apiUrl = `https://eurozon-deal-finder.onrender.com/compare/${asin}`;
+  const apiUrl = `http://localhost:3001/compare/${asin}`;
 
   try {
     const res = await fetch(apiUrl);

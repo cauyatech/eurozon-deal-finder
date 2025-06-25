@@ -38,8 +38,7 @@ cd eurozon-deal-finder
 ```bash
 cd backend
 npm install
-npm install --save-dev nodemon
-npm run dev
+node index.js
 ```
 
 Le backend sera disponible sur `http://localhost:3001`
@@ -58,9 +57,11 @@ Le frontend sera disponible sur `http://localhost:3000`
 
 ### 4. Pour utiliser le projet, suivez simplement ces commandes
 
+Car le backend a été relié au frontend.
+
 ```bash
 cd backend
-npm run dev
+node index.js
 ```
 
 Le projet se lancera sur l'adresse `http://localhost:3001`
@@ -72,7 +73,7 @@ Le projet se lancera sur l'adresse `http://localhost:3001`
 Collez une URL Amazon du style :
 
 ```
-https://www.amazon.fr/Samsung-Ecran-Odyssey-180Hz-R%C3%A9solution/dp/B0CW9HZKYW?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2MWNZXU6KW5Q1&dib=eyJ2IjoiMSJ9.O4mCjtJAHRGszBsGOqCOoEnbwtHlTbQSdbTZBOk5WgLulym5uVE3RH_Kb9PiCYhl_eTrAHiOAb1ky5Rlry3sjizp7Z3uifkqp3-zffQanuX6AB6RLsTy9HUXhe56yIkt7ZaG1ZmvliywwDakG33wTIOTpehTXCrm-lchIyK8zTy_lYepA1I3M_aAQj3XYh8OiUV4M7rl0UuPUPMpDXBww3y4kV_MKWpf-xlpBzxDwJxHc6NmDhB0Tn9Sicz41SkYvJdMmuB7ZcS33FtitEATLHeR6laE-GrYlIoZfLQEKeo.aUU3YaKMKYzn4QSZnMxIQuX8p1zob5h6BNImuvH0BvU&dib_tag=se&keywords=samsung+g5&qid=1747576066&sprefix=samsung+g5%2Caps%2C340&sr=8-2
+https://www.amazon.fr/-/en/Gaming-Monitor-1920x1080-Frameless-DisplayPort/dp/B0BV6TD7DM?crid=2UWQWXO5B1WTJ&dib=eyJ2IjoiMSJ9.qoS9meibc-illnszq7SXuEdfHiiQLzibs2NKnTZjret8JZkg8bzLymBOovRwyoyM40dYyT4KVz-mpNwy992SqQeHkOfza_bySuw8Ypezg67jBeE75WHImN_txClAS1uoBRxJmQn2GdBaR30UNBR0iTQIS7xkb34C0-BF2f9SBErxJepEz8ePTgnRpurQc0N2CfAw8VqCwfwiW-nQguQUkGpv0QW0bwWTEnPJ5HWfjOEPOFrED6Gz6OyYFLhR8teTKb1Y0MCiqmKPuobXOs7cVKx8l7oe1J-sdK_Vb2vvJ3U.uJo36y3b3hw0yowLlYX8GNlvbuQhdehlY86wSuvd20U&dib_tag=se&keywords=300hz&qid=1750869817&s=computers&sprefix=300hz%2Ccomputers%2C91&sr=1-13
 ```
 
 Cliquez sur "Comparer" → les prix s'affichent en tableau avec lien direct par pays.

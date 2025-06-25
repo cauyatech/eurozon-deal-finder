@@ -5,11 +5,12 @@
 ** App
 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
   const [url, setUrl] = useState('');
   const [data, setData] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const extractASIN = (url) => {
     const match = url.match(/(?:dp|product)\/([A-Z0-9]{10})/);
@@ -20,7 +21,7 @@ function App() {
     const asin = extractASIN(url);
     if (!asin) return alert("ASIN invalide");
 
-    const response = await fetch(`https://eurozon-deal-finder.onrender.com/compare/${asin}`);
+    const response = await fetch(`http://localhost:3001/compare/${asin}`);
     const result = await response.json();
     setData(result);
   };
@@ -32,10 +33,30 @@ function App() {
     return parseFloat(match[1].replace(',', '.'));
   };
 
+  useEffect(() => {
+    fetch('/history')
+      .then(res => res.json())
+      .then(setHistory)
+      .catch(() => setHistory([]));
+  }, []);
+
   return (
     <div style={{ padding: 20, fontFamily: 'Segoe UI, sans-serif', backgroundColor: '#f9f9f9' }}>
       <h1 style={{ color: '#1a1a1a', textAlign: 'center' }}>💶 Eurozon Deal Finder</h1>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
+        {history.length > 0 && (
+            <select
+              onChange={(e) => setUrl(e.target.value)}
+              style={{ maxWidth: '100%', width: '300px', padding: '10px', borderRadius: '6px', border: '1px solid #ccc' }}
+            >
+              <option value="">Sélectionnez un produit récent</option>
+              {history.map((item, index) => (
+                <option key={index} value={item.url}>
+                  {item.asin} - {item.title?.fr?.slice(0, 40) || 'Titre inconnu'}
+                </option>
+              ))}
+            </select>
+          )}
         <input
           type="text"
           placeholder="Mettez une URL Amazon"
@@ -61,7 +82,7 @@ function App() {
                 <th style={{ padding: '10px', border: '1px solid #ddd' }}>Nom du produit</th>
                 <th style={{ padding: '10px', border: '1px solid #ddd' }}>Prix</th>
                 <th style={{ padding: '10px', border: '1px solid #ddd' }}>Lien</th>
-                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Alerte</th>
+                {/* <th style={{ padding: '10px', border: '1px solid #ddd' }}>Alerte</th> */}
               </tr>
             </thead>
             <tbody>
@@ -96,7 +117,8 @@ function App() {
         <div style={{ marginTop: 30, color: 'red', textAlign: 'center' }}>
           Problème lors de la récupération des prix.
         </div>
-      )}
+      )
+      }
     </div>
   );
 }

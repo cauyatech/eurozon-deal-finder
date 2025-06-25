@@ -30,10 +30,8 @@ app.get('/compare/:asin', async (req, res) => {
         const itData = await scrapeAmazonIT(asin);
         const beData = await scrapeAmazonBE(asin);
 
-        // Calcul du prix total (prix + frais de port)
         function parsePrice(priceStr) {
             if (!priceStr) return null;
-            // Extrait le nombre (ex: "12,34 €" ou "12.34€")
             const match = priceStr.replace(',', '.').match(/([0-9]+(\.[0-9]{1,2})?)/);
             return match ? parseFloat(match[1]) : null;
         }
@@ -66,8 +64,6 @@ app.get('/compare/:asin', async (req, res) => {
                 links[country] = null;
             }
         });
-
-        // Historique de recherche local (10 derniers produits)
         const historyPath = path.join(__dirname, 'search_history.json');
         let history = [];
         if (fs.existsSync(historyPath)) {
@@ -75,7 +71,6 @@ app.get('/compare/:asin', async (req, res) => {
                 history = JSON.parse(fs.readFileSync(historyPath, 'utf-8'));
             } catch (e) { history = []; }
         }
-        // On ajoute la nouvelle recherche en tête
         history.unshift({
             asin,
             date: new Date().toISOString(),
@@ -85,7 +80,6 @@ app.get('/compare/:asin', async (req, res) => {
             prixTotals,
             links
         });
-        // On garde les 10 plus récents
         history = history.slice(0, 10);
         fs.writeFileSync(historyPath, JSON.stringify(history, null, 2));
 
@@ -102,6 +96,17 @@ app.get('/compare/:asin', async (req, res) => {
         console.error("Erreur de scraping:", err);
         res.status(500).json({error: "Erreur de scraping sur amazon"});
     }
+});
+
+app.get('/history', (req, res) => {
+  const historyPath = path.join(__dirname, '/search_history.json');
+  let history = [];
+  if (fs.existsSync(historyPath)) {
+    try {
+      history = JSON.parse(fs.readFileSync(historyPath, 'utf-8'));
+    } catch (e) { history = []; }
+  }
+  res.json(history);
 });
 
 app.listen(PORT, () => {
