@@ -40,7 +40,7 @@ async function scrapeAmazonFR(asin) {
     return { title, price };
   });
   await browser.close();
-  return result;
+  return { ...result, fraisPortEstime: '4.99€' };
 }
 
 module.exports = scrapeAmazonFR;

@@ -17,6 +17,7 @@ const scrapeAmazonES = require('./scrapers/amazonES');
 const scrapeAmazonIT = require('./scrapers/amazonIT');
 const scrapeAmazonBE = require('./scrapers/amazonBE');
 const path = require('path');
+const fs = require('fs');
 
 app.use(cors());
 
@@ -29,30 +30,73 @@ app.get('/compare/:asin', async (req, res) => {
         const itData = await scrapeAmazonIT(asin);
         const beData = await scrapeAmazonBE(asin);
 
+        // Calcul du prix total (prix + frais de port)
+        function parsePrice(priceStr) {
+            if (!priceStr) return null;
+            // Extrait le nombre (ex: "12,34 €" ou "12.34€")
+            const match = priceStr.replace(',', '.').match(/([0-9]+(\.[0-9]{1,2})?)/);
+            return match ? parseFloat(match[1]) : null;
+        }
+        function parseFrais(fraisStr) {
+            if (!fraisStr) return 0;
+            const match = fraisStr.replace(',', '.').match(/([0-9]+(\.[0-9]{1,2})?)/);
+            return match ? parseFloat(match[1]) : 0;
+        }
+        const countries = ['fr', 'de', 'es', 'it', 'be'];
+        const datas = { fr: frData, de: deData, es: esData, it: itData, be: beData };
+        const prices = {};
+        const fraisPorts = {};
+        const prixTotals = {};
+        const titles = {};
+        const links = {};
+        countries.forEach(country => {
+            prices[country] = datas[country].price || 'Prix indisponible.';
+            fraisPorts[country] = datas[country].fraisPortEstime || 'Frais indisponibles.';
+            const prixNum = parsePrice(datas[country].price);
+            const fraisNum = parseFrais(datas[country].fraisPortEstime);
+            prixTotals[country] = (prixNum !== null && fraisNum !== null) ? (prixNum + fraisNum).toFixed(2) + '€' : 'Total indisponible.';
+            titles[country] = datas[country].title || 'Produit non trouvé dans ce pays.';
+            if (datas[country].price) {
+                if (country === 'fr') links[country] = `https://www.amazon.fr/dp/${asin}`;
+                if (country === 'de') links[country] = `https://www.amazon.de/dp/${asin}`;
+                if (country === 'es') links[country] = `https://www.amazon.es/dp/${asin}`;
+                if (country === 'it') links[country] = `https://www.amazon.it/dp/${asin}`;
+                if (country === 'be') links[country] = `https://www.amazon.com.be/dp/${asin}`;
+            } else {
+                links[country] = null;
+            }
+        });
+
+        // Historique de recherche local (10 derniers produits)
+        const historyPath = path.join(__dirname, 'search_history.json');
+        let history = [];
+        if (fs.existsSync(historyPath)) {
+            try {
+                history = JSON.parse(fs.readFileSync(historyPath, 'utf-8'));
+            } catch (e) { history = []; }
+        }
+        // On ajoute la nouvelle recherche en tête
+        history.unshift({
+            asin,
+            date: new Date().toISOString(),
+            titles,
+            prices,
+            fraisPorts,
+            prixTotals,
+            links
+        });
+        // On garde les 10 plus récents
+        history = history.slice(0, 10);
+        fs.writeFileSync(historyPath, JSON.stringify(history, null, 2));
+
         res.json({
             asin,
-            countries: ['fr', 'de', 'es', 'it', 'be'],
-            prices: {
-                fr: frData.price || 'Prix indisponible.',
-                de: deData.price || 'Prix indisponible.',
-                es: esData.price || 'Prix indisponible.',
-                it: itData.price || 'Prix indisponible.',
-                be: beData.price || 'Prix indisponible.'
-            },
-            titles: {
-                fr: frData.title || 'Produit non trouvé dans ce pays.',
-                de: deData.title || 'Produit non trouvé dans ce pays.',
-                es: esData.title || 'Produit non trouvé dans ce pays.',
-                it: itData.title || 'Produit non trouvé dans ce pays.',
-                be: beData.title || 'Produit non trouvé dans ce pays.'
-            },
-            links: {
-                fr: frData.price ? `https://www.amazon.fr/dp/${asin}` : null,
-                de: deData.price ? `https://www.amazon.de/dp/${asin}` : null,
-                es: esData.price ? `https://www.amazon.es/dp/${asin}` : null,
-                it: itData.price ? `https://www.amazon.it/dp/${asin}` : null,
-                be: beData.price ? `https://www.amazon.com.be/dp/${asin}` : null
-            }
+            countries,
+            prices,
+            fraisPorts,
+            prixTotals,
+            titles,
+            links
         });
     } catch (err) {
         console.error("Erreur de scraping:", err);

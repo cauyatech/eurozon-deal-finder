@@ -11,6 +11,8 @@ Eurozon Deal Finder est une application web qui permet de comparer automatiqueme
 * Affichage comparatif des prix dans un tableau trié
 * Lien direct vers la page du produit
 * Affichage du nom du produit par pays
+* Frais de port estimés
+* Historique de recherche
 
 ---
 

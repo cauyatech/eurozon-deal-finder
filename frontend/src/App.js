@@ -51,7 +51,7 @@ function App() {
         </button>
       </div>
 
-      {data && (
+      {data && data.countries ? (
         <div style={{ marginTop: 30, overflowX: 'auto' }}>
           <h2 style={{ color: '#333', textAlign: 'center' }}>📦 Résultats pour ASIN: <span style={{ color: '#0070f3' }}>{data.asin}</span></h2>
           <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse', marginTop: '1rem', backgroundColor: '#fff', boxShadow: '0 0 10px rgba(0,0,0,0.05)' }}>
@@ -91,6 +91,10 @@ function App() {
               })}
             </tbody>
           </table>
+        </div>
+      ) : data && (
+        <div style={{ marginTop: 30, color: 'red', textAlign: 'center' }}>
+          Problème lors de la récupération des prix.
         </div>
       )}
     </div>
