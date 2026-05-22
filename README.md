@@ -102,13 +102,6 @@ eurozon-deal-finder/
 │   │   └── index.js
 │   └── public/
 ```
-
----
-
-## 🧑‍💻 Auteurs
-
-Projet réalisé dans le cadre du module Hub à Epitech par SILVA DA COSTA Josselino
-
 ---
 
 ## 📜 Licence
